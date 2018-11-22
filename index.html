@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Proyecto</title>
+	
+	<link rel="stylesheet" type="text/css" href="estilos.css">
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"> 
+	<!-- Latest compiled and minified CSS -->
+
+<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD4Oy3l4BSWHueL-N2O9epgUf1jDibf_GM",
+    authDomain: "unidrive-027.firebaseapp.com",
+    databaseURL: "https://unidrive-027.firebaseio.com",
+    projectId: "unidrive-027",
+    storageBucket: "unidrive-027.appspot.com",
+    messagingSenderId: "108562226951"
+  };
+  firebase.initializeApp(config);
+</script>
+<script type="text/javascript" src="js/autentificacion.js"></script>
+</head>
+<body>
+<div id="log_div" class = "log-page">
+
+	<h2>Consultar base de datos</h2>
+	
+		<input type="text" placeholder="Usuario..."  id="usuario"/>
+		<input type="password" placeholder="Contraseña..."  id="contra"/>
+		<button onclick="login()">iniciar sesion</button>
+
+	</div>
+	<div id="user_div" class="logged">
+		<head>Bienvenido</head>
+		<p id="user_para"></p>
+		<button onclick="logout()">cerrar sesion</button>
+	</div>
+	<h3>Imagen </h3>
+	<label class = "upload-group">
+	<input type="file" class="upload-group" id="file">
+	</label>
+	<button type="btn btn-primary" id="uploadButton"></button>
+</body>
+</html>
