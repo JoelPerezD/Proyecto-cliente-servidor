@@ -1,39 +1,56 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<title>Proyecto</title>
-	
-	<link rel="stylesheet" type="text/css" href="estilos.css">
-	<meta charset="utf-8">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"> 
-	<!-- Latest compiled and minified CSS -->
+  <meta charset="utf-8">
+  <title>UniDrive</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
 
-<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+  <div id="login_div" class="main-div">
+    <h3>UniDrive</h3>
+    <input type="email" placeholder="Correo..." id="email_field" />
+    <input type="password" placeholder="Contraseña..." id="password_field" />
+
+    <button onclick="login()">Iniciar secion</button>
+  </div>
+
+  <div id="user_div" class="loggedin-div">
+    <h3>Bienvenido</h3>
+    <p id="user_para">Usted se encuentra logeado</p>
+    <div id="root"> Imagen: </div>
+  <div id="root2"> Latitud: </div>
+  <div id="root3"> Longitud: </div>
+  <div id="root4"> descripcion: </div>
+  <br/>
+  <br/>
+  
+  <div id="root5"> ---- </div>
+  <br/>
+  <input type="text" value="ID de la imagen" id="texto" /> 
+  <button id="borrar">Borrar</button>
+    <button onclick="logout()">Cerrar Sesion</button>
+  </div>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
 <script>
   // Initialize Firebase
   var config = {
-     apiKey: "AIzaSyD4Oy3l4BSWHueL-N2O9epgUf1jDibf_GM",
+    apiKey: "AIzaSyD4Oy3l4BSWHueL-N2O9epgUf1jDibf_GM",
     authDomain: "unidrive-027.firebaseapp.com",
     databaseURL: "https://unidrive-027.firebaseio.com",
     projectId: "unidrive-027",
     storageBucket: "unidrive-027.appspot.com",
     messagingSenderId: "108562226951"
-  };
+  };{}
   firebase.initializeApp(config);
 </script>
-<script type="text/javascript" src="js/autentificacion.js"></script>
-</head>
-<body>
-	<div id="log_div" class = "log-page">
-	<h2>Consultar base de datos</h2>
-		<input type="text" placeholder="Usuario..."  id="usuario"/>
-		<input type="password" placeholder="Contraseña..."  id="contra"/>
-		<button onclick="login()">iniciar sesion</button>
-	</div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="js/autentificacion.js"></script>
 
-	<div id="user_div" class="logged">
-		<h3>Bienvenido</h3>
-		<button onclick="logout()">cerrar sesion</button>
-	</div>
 </body>
 </html>

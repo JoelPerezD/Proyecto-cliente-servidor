@@ -1,32 +1,79 @@
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    document.getElementById("user_div").style.display="block";
-    document.getElementById("log_div").style.display="none";
-   
-  }
-  else {
+    // User is signed in.
+
+    document.getElementById("user_div").style.display = "block";
+    document.getElementById("login_div").style.display = "none";
+
+    var user = firebase.auth().currentUser;
+
+    if(user != null){
+
+      var email_id = user.email;
+      document.getElementById("user_para").innerHTML = "Bienvenido: " + email_id;
+
+    }
+
+  } else {
     // No user is signed in.
-    document.getElementById("user_div").style.display="none";
-    document.getElementById("log_div").style.display="block";
+
+    document.getElementById("user_div").style.display = "none";
+    document.getElementById("login_div").style.display = "block";
+
   }
-});         
-  //https://firebasestorage.googleapis.com/v0/b/unidrive-027.appspot.com/o/images%2FnameImage19112018_185479.jpg?alt=media&token=67c2159e-b720-47c8-a254-b69dd2f8d064
-  //firebasestorage.googleapis.com/v0/b/unidrive-027.appspot.com/o/images%2FnameImage20112018_110940.jpg?alt=media&token=e4642cff-e118-4e70-abf5-ac0d64b629bd
+});
+
 function login(){
 
-  var usuario=document.getElementById("usuario").value;
-  var contraseña =document.getElementById("contra").value;
+  var userEmail = document.getElementById("email_field").value;
+  var userPass = document.getElementById("password_field").value;
 
-  firebase.auth().signInWithEmailAndPassword(usuario, contraseña).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message; 
+  firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
 
-  window.alert("Try again " +errorMessage);
-});
+    window.alert("Error : " + errorMessage);
+
+    // ...
+  });
+
 }
 
- function logout(){
+function logout(){
   firebase.auth().signOut();
 }
 
+// Elimina un foto de la BD
+
+$('#borrar').click(function(){
+  //var email = document.getElementById('firstname');
+//firebase.database().ref("Photos/-LRzaGEbnJsbwLMhiHtT").remove(); // con esta linea puedo borrar
+firebase.database().ref("Photos/"+texto.value).remove();
+location.reload();// recarga la pagina 
+});
+
+
+// aqui estoy leyendo de la BD 
+//me da toda la base de datos de la tabla Photos
+firebase.database().ref("Photos")
+.on("child_added",function(s){
+   var user = s.val();
+
+   $('#root').append("<img width='100' src='"+user.downloadUrl+"'/>")
+   $('#root2').append("+++"+user.latitude)
+   $('#root3').append("+++"+user.longitude)
+   $('#root4').append("+++"+user.description)
+  
+  })
+
+
+// me da la informacion de un foto en espesifico 
+firebase.database().ref("Photos/-LS6BI_RhLtMXEsO7ApW")
+.on("child_added",function(s){
+   var user = s.val();
+
+   
+   $('#root5').append(s.val())
+  
+})
