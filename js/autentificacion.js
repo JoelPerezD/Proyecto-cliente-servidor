@@ -56,24 +56,22 @@ location.reload();// recarga la pagina
 
 // aqui estoy leyendo de la BD 
 //me da toda la base de datos de la tabla Photos
-firebase.database().ref("Photos")
-.on("child_added",function(s){
-   var user = s.val();
+firebase.database().ref("Photos").on("child_added", function(s) {
+  var user = s.val();
 
-   $('#root').append("<img width='100' src='"+user.downloadUrl+"'/>")
-   $('#root2').append("+++"+user.latitude)
-   $('#root3').append("+++"+user.longitude)
-   $('#root4').append("+++"+user.description)
-  
-  })
+  var imageRef = firebase.database().ref("Photos/" + user.ID);
+  imageRef.once('value').then(function(snapshot) {
+      var photoDiv = document.createElement("div");
+      var btnDelete = '<input type="submit" value="BORRAR" class="delete" name="BORRAR"/>';
 
-
-// me da la informacion de un foto en espesifico 
-firebase.database().ref("Photos/-LS6BI_RhLtMXEsO7ApW")
-.on("child_added",function(s){
-   var user = s.val();
-
-   
-   $('#root5').append(s.val())
-  
-})
+      var photo = document.createElement($('#photo').append("<img width='100' src='" + user.downloadUrl + "'/> <br/>" + 
+                                          "Nombre: " + user.name + "<br/>" + "Descripción: "+ user.description + "<br/>" + 
+                                          "Latitud: " + user.latitude + "<br/>" + "longitud: " + user.longitude + "<br/>" + 
+                                          "ID: " + user.ID + "<br/>" + btnDelete + "<br/> <br/>"));
+                                          
+      photoDiv.appendChild(photo);
+      var currentDiv = document.getElementById("photos");
+      document.body.insertBefore(photoDiv, currentDiv);
+      var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    });
+  });
