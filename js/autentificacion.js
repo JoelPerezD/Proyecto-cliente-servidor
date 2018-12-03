@@ -4,13 +4,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     document.getElementById("user_div").style.display = "block";
     document.getElementById("login_div").style.display = "none";
+    document.getElementById("cerrar").style.display = "block";
+   
 
     var user = firebase.auth().currentUser;
 
     if(user != null){
 
       var email_id = user.email;
-      document.getElementById("user_para").innerHTML = "Bienvenido: " + email_id;
+      document.getElementById("user_para").innerHTML = " "+ email_id;
 
     }
 
@@ -19,7 +21,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     document.getElementById("user_div").style.display = "none";
     document.getElementById("login_div").style.display = "block";
-
+    document.getElementById("cerrar").style.display = "none";
+   
   }
 });
 
@@ -39,12 +42,22 @@ function login(){
   });
 
 }
+// cerrar secion 
 
 function logout(){
   firebase.auth().signOut();
 }
 
 // Elimina un foto de la BD
+ var borrar = document.getElementById('borrar')
+function  delOnClick(){
+  
+var eventContactsRef = firebase.database().ref('Photos');
+var query = eventContactsRef.orderByChild('ID').equalTo(eventContactId);
+query.on('child_added', function(snapshot) {
+    snapshot.ref.remove();
+})
+}
 
 $('#borrar').click(function(){
   //var email = document.getElementById('firstname');
@@ -62,9 +75,9 @@ firebase.database().ref("Photos").on("child_added", function(s) {
   var imageRef = firebase.database().ref("Photos/" + user.ID);
   imageRef.once('value').then(function(snapshot) {
       var photoDiv = document.createElement("div");
-      var btnDelete = '<input type="submit" value="BORRAR" class="delete" name="BORRAR"/>';
+      var btnDelete = '<input type="submit" value="Borrar" class="btn btn-danger" name="Borrar"/>';
 
-      var photo = document.createElement($('#photo').append("<img width='100' src='" + user.downloadUrl + "'/> <br/>" + 
+      var photo = document.createElement($('#photo').append("<img width='350' src='" + user.downloadUrl + "'/> <br/>" + 
                                           "Nombre: " + user.name + "<br/>" + "Descripción: "+ user.description + "<br/>" + 
                                           "Latitud: " + user.latitude + "<br/>" + "longitud: " + user.longitude + "<br/>" + 
                                           "ID: " + user.ID + "<br/>" + btnDelete + "<br/> <br/>"));
